@@ -1,0 +1,4 @@
+djangorestframework
+markdown
+django-filter
+djangorestframework-simplejwt==5.3.1

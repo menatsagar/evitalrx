@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+</head>
+<body>
+    <h1>Welcome to the Dashboard</h1>
+    <div id="notifications"></div>
+
+    <script>
+        const notifications = document.getElementById('notifications');
+        const userId = "{{ request.user.id }}"; // Ensure you pass the user ID from your Django context
+        const socket = new WebSocket(`ws://${window.location.host}/ws/notifications/`);
+
+        socket.onmessage = function(event) {
+            const data = JSON.parse(event.data);
+            const notification = document.createElement('div');
+            notification.innerText = data.notification;
+            notifications.appendChild(notification);
+        };
+
+        socket.onclose = function(event) {
+            console.error('WebSocket closed unexpectedly');
+        };
+    </script>
+</body>
+</html>
